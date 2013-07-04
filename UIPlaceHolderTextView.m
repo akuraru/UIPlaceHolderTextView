@@ -11,10 +11,6 @@
 @implementation UIPlaceHolderTextView
 
 #pragma mark - Accessors
-
-@synthesize placeholder = _placeholder;
-@synthesize placeholderTextColor = _placeholderTextColor;
-
 - (void)setText:(NSString *)string
 {
 	[super setText:string];
@@ -43,7 +39,7 @@
 		return;
 	}
 	
-	_placeholder = string;
+	_placeholder = [string copy];
 	[self setNeedsDisplay];
 }
 
@@ -74,6 +70,9 @@
 - (void)dealloc
 {
 	[[NSNotificationCenter defaultCenter] removeObserver:self name:UITextViewTextDidChangeNotification object:self];
+    _placeholder = nil;
+    _placeholderTextColor = nil;
+    [super dealloc];
 }
 
 
@@ -118,9 +117,9 @@
 		// Draw the text
 		[_placeholderTextColor set];
 #if __IPHONE_OS_VERSION_MIN_REQUIRED >= __IPHONE_6_0
-		[_placeholder drawInRect:rect withFont:self.font lineBreakMode:NSLineBreakByTruncatingTail alignment:self.textAlignment];
+		[self.placeholder drawInRect:rect withFont:self.font lineBreakMode:NSLineBreakByTruncatingTail alignment:self.textAlignment];
 #else
-		[_placeholder drawInRect:rect withFont:self.font lineBreakMode:UILineBreakModeTailTruncation alignment:self.textAlignment];
+		[self.placeholder drawInRect:rect withFont:self.font lineBreakMode:UILineBreakModeTailTruncation alignment:self.textAlignment];
 #endif
 	}
 }
@@ -130,6 +129,7 @@
 - (void)_initialize
 {
 	[[NSNotificationCenter defaultCenter] addObserver:self selector:@selector(_textChanged:) name:UITextViewTextDidChangeNotification object:self];
+    self.placeholder = nil;
 	self.placeholderTextColor = [UIColor colorWithWhite:0.702f alpha:1.0f];
 }
 
