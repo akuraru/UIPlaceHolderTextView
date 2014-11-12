@@ -72,7 +72,6 @@
 	[[NSNotificationCenter defaultCenter] removeObserver:self name:UITextViewTextDidChangeNotification object:self];
     _placeholder = nil;
     _placeholderTextColor = nil;
-    [super dealloc];
 }
 
 
