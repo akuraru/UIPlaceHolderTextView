@@ -12,7 +12,10 @@
 
 @interface UIPlaceHolderTextView : UITextView
 
-@property (nonatomic, strong) NSString *placeholder;
-@property (nonatomic, strong) UIColor  *placeholderTextColor;
+- (NSString *)placeholder;
+- (void)setPlaceholder:(NSString *)placeholder;
+
+- (UIColor *)placeholderTextColor;
+- (void)setPlaceholderTextColor:(UIColor *)placeholderTextColor;
 
 @end
